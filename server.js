@@ -1,8 +1,33 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var path = require('path');
+var hbs = require('hbs');
 var app = express();
 
 app.use(express.logger());
+app.set('view engine', 'hbs');
+app.set('views', __dirname + '/views');
+
+app.use(express.static(__dirname + '/public'));
+
+var blocks = {};
+
+hbs.registerHelper('extend', function(name, context) {
+    var block = blocks[name];
+    if (!block) {
+        block = blocks[name] = [];
+    }
+
+    block.push(context.fn(this));
+});
+
+hbs.registerHelper('block', function(name) {
+    var val = (blocks[name] || []).join('\n');
+
+    // clear the block
+    blocks[name] = [];
+    return val;
+});
 
 mongoose.connect(process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL || "mongodb://localhost:27017/proximity");
@@ -10,8 +35,6 @@ mongoose.connect(process.env.MONGOLAB_URI ||
 var Trigger = mongoose.model('trigger', {
   uuid: 'string'
 });
-
-
 
 app.get('/api/triggers/:uuid', function(req, res){
   if (req.param("uuid")) {
@@ -36,7 +59,11 @@ app.get('/api/triggers/:uuid', function(req, res){
 });
 
 app.get('/', function(req, res) {
-  res.send("Hello World!");
+  res.render('index');
+});
+
+app.get('/beacons/create', function(req, res) {
+  res.render('beacons/create');
 });
 
 app.listen(process.env.PORT || 3000);

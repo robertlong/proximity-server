@@ -1,0 +1,63 @@
+<section class="beacon-create" ng-controller="TabFormCtrl">
+  <h1>Create a Beacon:</h1>
+  <form class="beacon-form" role="form">
+      <div class="form-group narrow">
+        <label for="name">Beacon Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Beacon Name">
+      </div>
+      <div class="form-group narrow">
+        <label for="message">Beacon Message</label>
+        <input type="text" class="form-control" id="message" placeholder="Beacon Message">
+      </div>
+      <div class="form-group narrow">
+        <label for="uuid">Beacon UUID</label>
+        <input type="text" class="form-control" id="uuid" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+      </div>
+      <div class="form-group map">
+        <h3>Beacon Position</h3>
+        <label for="latitude">Latitude</label>
+        <input type="text" id="latitude">
+        <br>
+        <label for="latitude">Longitude</label>
+        <input type="text" id="longitude">
+        <br>
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+        <div id="map-canvas"/>
+      </div>
+      <div class="form-group">
+        <h3>App Tabs</h3>
+        <div class="row">
+          <div class="col-lg-8">
+            <select id="tab-select" class="form-control">
+              <option value="Menu">Menu</option>
+              <option value="Info">HTML</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Twitter">Twitter</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Google+">Google+</option>
+              <option value="Yelp">Yelp</option>
+              <option value="Foursquare">Foursquare</option>
+              <option value="Website">Website</option>
+              <option value="Download">Download</option>
+            </select>
+          </div>
+          <div class="col-lg-4">
+            <button type="button" id="add-tab" class="btn btn-success">Add</button>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-default" ng-click="addTab()">Submit</button>
+  </form>
+</section>
+{{#extend "scripts"}}
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKjP06WucdKG1Cj2mzofmA-J4UlckG5y8&sensor=true&libraries=places"></script>
+<script type="text/javascript" src="/js/map.js"></script>
+<script type="text/ng-template" id="/tab.html">
+  <div class="form-group narrow">
+    <label for="tab-title">Tab Title</label>
+    <input type="text" class="form-control" id="tab-title" placeholder="Title">
+  </div>
+</script>
+<script type="text/javascript" src="/js/tab_form.js"></script>
+{{/extend}}
