@@ -62,6 +62,10 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+app.get('/firestone', function(req, res) {
+  res.render('firestone');
+});
+
 app.get('/beacons/create', function(req, res) {
   res.render('beacons/create');
 });
